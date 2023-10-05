@@ -1,4 +1,4 @@
-package micro.cursos.cursos;
+package micro.cursos;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
