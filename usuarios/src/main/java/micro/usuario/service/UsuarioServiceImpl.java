@@ -3,6 +3,7 @@ package micro.usuario.service;
 import java.util.List;
 import java.util.Optional;
 
+import micro.usuario.client.CourseFeingClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
     private UsuarioRepo usuarioRepo;
+
+    @Autowired
+    private CourseFeingClient courseFeingClient;
 
     @Override
     public ResponseEntity<List<Usuario>> findUsuarios() {
@@ -39,12 +43,19 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public ResponseEntity<?> delete(Long id) {
         try {
+            courseFeingClient.deleteUser(id);
             usuarioRepo.deleteById(id);
             return ResponseEntity.ok("User deleted succesfully");
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return ResponseEntity.badRequest().body("error in service");
         }
 
+    }
+
+    @Override
+    public ResponseEntity<List<Usuario>> listIds(Iterable<Long> ids) {
+        return ResponseEntity.ok((List<Usuario>) usuarioRepo.findAllById(ids));
     }
 
     @Override

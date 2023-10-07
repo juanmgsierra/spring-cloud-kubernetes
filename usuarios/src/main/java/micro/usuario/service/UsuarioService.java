@@ -13,5 +13,5 @@ public interface UsuarioService {
     ResponseEntity<Usuario> save(Usuario usuario);
     ResponseEntity<?> update(Long id, Usuario usuario);
     ResponseEntity<?> delete(Long id);
-
+    ResponseEntity<List<Usuario>> listIds(Iterable<Long> ids);
 }
